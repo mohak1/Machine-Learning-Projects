@@ -13,8 +13,7 @@ Function Used: Sigmoid
 Cost(or Error) Function: Mean Squared Error
 Optimisation Function: Gradient Descent (Using for the first time)
 A program to predict the output (0 or 1) based on given set of inputs
-
-Accuracy: 78.38%
+Accuracy: 78.645%
 """
 
 import pandas as pd
@@ -26,13 +25,14 @@ ds = np.array(ds)   #convert the csv to numpy array
 X = ds[:,0:8]
 Y = ds[:,8]
 
+np.random.seed(11)
 
 #1.Defining the model
 model1 = ks.models.Sequential()
 #Adding layers ot the model
-model1.add(ks.layers.Dense(10, input_dim=8, activation="relu")) #input layer
-model1.add(ks.layers.Dense(18, activation='relu'))  #hidden layer 1
-model1.add(ks.layers.Dense(5, activation='relu'))  #hidden layer 2
+model1.add(ks.layers.Dense(40, input_dim=8, activation="relu")) #input layer
+model1.add(ks.layers.Dense(25, activation='relu'))  #hidden layer 1
+model1.add(ks.layers.Dense(15, activation='relu'))  #hidden layer 2
 #model1.add(ks.layers.Dense(5, activation='relu'))  #hidden Layer 3
 model1.add(ks.layers.Dense(1, activation='sigmoid'))  #output layer
 
