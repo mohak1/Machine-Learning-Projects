@@ -14,7 +14,7 @@ Cost(or Error) Function: Mean Squared Error
 Optimisation Function: Gradient Descent (Using for the first time)
 A program to predict the output (0 or 1) based on given set of inputs
 
-Accuracy: 75.781%
+Accuracy: 78.38%
 """
 
 import pandas as pd
@@ -31,7 +31,7 @@ Y = ds[:,8]
 model1 = ks.models.Sequential()
 #Adding layers ot the model
 model1.add(ks.layers.Dense(10, input_dim=8, activation="relu")) #input layer
-model1.add(ks.layers.Dense(12, activation='relu'))  #hidden layer 1
+model1.add(ks.layers.Dense(18, activation='relu'))  #hidden layer 1
 model1.add(ks.layers.Dense(5, activation='relu'))  #hidden layer 2
 #model1.add(ks.layers.Dense(5, activation='relu'))  #hidden Layer 3
 model1.add(ks.layers.Dense(1, activation='sigmoid'))  #output layer
