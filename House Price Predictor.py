@@ -1,61 +1,44 @@
-#House Price predictor
+# -*- coding: utf-8 -*-
+"""
+Created on Thu Mar  1 18:46:04 2018
+
+@author: Mohak
+
+House Price Prediction program
+"""
+
+import pandas as pd
 import numpy as np
-import math
+import keras as ks
 
-#cost function (J)
-def J(X,theta,b,Y):
-    H = np.dot(X,theta) + b
-    J = (1/20) * np.sum(H-Y)**2
-    return J
+ds = pd.read_csv("E:\ML projects\Unreliable House Data.csv") #read the csv file
+ds = np.array(ds)   #convert the csv to numpy array
+X = ds[:,1:4]
+print(X.shape)
+Y = ds[:,1]
+#print(Y)
 
-def Gradient(alpha,b,theta,X):
-    H = np.dot(X,theta)
-    b -= alpha*(1/10)*np.sum(H-Y.T)
-    tem = np.sum(np.dot((H-Y.T),X))
-    print("valus of tem "+str(tem))
-    theta[0] -= alpha*(1/10)*tem
-    theta[1] -= alpha*(1/10)*tem
-    theta[2] -= alpha*(1/10)*tem
+np.random.seed(11)
 
+#1.Defining the model
+model1 = ks.models.Sequential()
+#Adding layers to the model
+model1.add(ks.layers.Dense(40, input_dim=3, activation="relu")) #input layer
+model1.add(ks.layers.Dense(25, activation='relu'))  #hidden layer 1
+model1.add(ks.layers.Dense(15, activation='relu'))  #hidden layer 2
+#model1.add(ks.layers.Dense(5, activation='relu'))  #hidden Layer 3
+model1.add(ks.layers.Dense(1, activation='sgd'))  #output layer
 
-#input data
-X = np.array([[3,1,1],
-             [3,2.5,2],
-             [2,1,1],
-             [4,3,1],
-             [3,2,1],
-             [3,2.5,2],
-             [3,1.5,1],
-             [3,1,1],
-             [3,2.5,2],
-             [3,2.5,2]])
+#2.Compile Block
+model1.compile(optimizer='adam', loss='mean_squared_error', metrics=['accuracy'])
 
-#output data
-Y = np.array([[221900],
-             [538000],
-             [180000],
-             [604000],
-             [510000],
-             [257500],
-             [291850],
-             [229500],
-             [323000],
-             [662500]])
+#3.Fit the model
+model1.fit(X, Y, epochs=100, batch_size=15, verbose=2)
 
-np.random.seed(1)
+#4.Evaluate model
+acc = model1.evaluate(X, Y)
+print("\nAccuracy =",acc[1]*100)
 
-#3 features - 3 parameters
-theta = np.random.random([3])
-b = 1
-alpha = 0.01
+#save the model
+model1.save("E:\ML projects\House model.h5")
 
-
-#loop
-for i in range(0,40000):
-    Gradient(alpha,b,theta,X)
-    if(i%10000):
-        print(str())
-
-inp =np.array([3,1,1])
-print(np.dot(theta,inp))
-    
